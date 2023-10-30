@@ -19,14 +19,17 @@ router = APIRouter(
 
 templates = Jinja2Templates(directory='app\\templates')
 
-@router.get('/')
-async  def get_main_page(request: Request):
+
+@router.get('/menu')
+async def get_menu(request: Request):
     context = {
         'request': request,
+        'title': 'Наш каталог',
+        'menu': catalog_data.menu
 
     }
     return templates.TemplateResponse(
-        'base.html',
+        'catalog.html',
         context=context
     )
 #

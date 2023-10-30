@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+    {% block title %}
+    <title>{{ title }}</title>
+    {% endblock %}
+
+
+
+{% block content %}
+
+<p class="h1">{{ title }}</p>
+    <ul>
+     {% for dish in menu %}
+        <br>
+        <p class="h2">{{ dish.title }}</p>
+        <img src="{{ url_for('static', path='image/' +dish.image) }}">
+        <p class="h4">{{ dish.price }}</p>
+     {% endfor %}
+    </ul>
+
+
+{% endblock %}
