@@ -14,7 +14,7 @@ alembic downgrade -1
 
 pip install fastapi[all] pytest pytest-asyncio
 
-uvicorn app.main:app --reload --port 8000
+uvicorn app.main:app --reload --port 7000
 
 pytest -vs .
 
