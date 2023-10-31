@@ -8,15 +8,24 @@
 
 {% block content %}
 
-<p class="h1">{{ title }}</p>
-    <ul>
-     {% for dish in menu %}
-        <br>
-        <p class="h2">{{ dish.title }}</p>
-        <img src="{{ url_for('static', path='image/' +dish.image) }}">
-        <p class="h4">{{ dish.price }}</p>
-     {% endfor %}
-    </ul>
+    {% if menu %}
+
+        <p class="h1">{{ title }}</p>
+        <ul>
+        {% for dish in menu %}
+            <br>
+    <!--        <p class="h2">{{ dish['title'] }}</p>-->
+            <p class="h2">{{ dish.title }}</p>
+            <img src="{{ url_for('static', path='image/' + dish.image) }}" alt="" width="200" height="300">
+            <p class="h4">{{ dish.price }}</p>
+            <hr>
+
+        {% endfor %}
+        </ul>
+    {% else %}
+            <p class="h2">немає доступних позицій</p>
+    {% endif %}
+
 
 
 {% endblock %}

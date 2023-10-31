@@ -30,8 +30,7 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
 
-<!--        <img src="{{ url_for('static', path='images/image(1).png') }}" alt="" width="35" height="35">-->
-<!--        <img src="https://images.unian.net/photos/2022_09/thumb_files/1200_0_1662892107-3846.jpg" alt="" width="35" height="35">-->
+        <img src="{{ url_for('static', path='favicon.ico') }}" alt="" width="50" height="50">
         <div class="navbar-brand">Miracle</div>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -44,7 +43,10 @@
                     <a class="nav-link active" aria-current="page" href="/web/menu">Каталог</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/web/about-us">Про нас</a>
+                    <a class="nav-link" href="/web/about-us">Доставка і оплата</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/web/about-contact">Магазни і контакти</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -53,13 +55,6 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/web/map">Карта проїзду</a></li>
-
-<!--                        {% if user %}-->
-<!--                        <li>-->
-<!--                            <hr class="dropdown-divider">-->
-<!--                        </li>-->
-<!--                        <li><a class="dropdown-item" href="/web/message">Написати всім повідомлення</a></li>-->
-<!--                        {% endif %}-->
 
                     </ul>
                 </li>
