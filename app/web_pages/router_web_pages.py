@@ -32,8 +32,10 @@ async def get_menu(request: Request):
         'catalog.html',
         context=context
     )
+
+
 @router.post('/search')
-# @router.get('/menu')
+@router.get('/menu')
 async def get_menu(request: Request, dish_name: str = Form(None)):
     filtered_menu = []
     if dish_name:
@@ -46,7 +48,7 @@ async def get_menu(request: Request, dish_name: str = Form(None)):
         'title': f'Результати пошуку за {dish_name}' if dish_name else 'Наше меню',
         'menu': filtered_menu if dish_name else catalog_data.menu,
         # 'user': user,
-        # 'categories': catalog_data.Categories
+        'categories': catalog_data.Categories
     }
 
     return templates.TemplateResponse(
