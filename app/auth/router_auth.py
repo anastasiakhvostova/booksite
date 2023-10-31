@@ -2,7 +2,7 @@ from fastapi import APIRouter, status, HTTPException, Request, Response, Depends
 
 # from .auth_lib import AuthHandler, AuthLibrary
 from .schemas import AuthDetails, AuthRegistered, AuthLogin
-# import dao
+import dao
 # from app.auth import dependencies
 #
 #
@@ -13,9 +13,19 @@ router = APIRouter(
 
 
 @router.post('/register', response_model=AuthRegistered, status_code=status.HTTP_201_CREATED)
-async def register_api(request: Request, response: Response, auth_details: AuthDetails):
-    print(request.cookies,          88888888888888888)
-    print(request.__dict__,          88888888888888888)
+async def register_api(auth_details: AuthDetails):
+    await dao.create_user(
+        name=auth_details.name,
+        login=auth_details.login,
+        password=auth_details.password,
+        notes=auth_details.notes,
+    )
+    return AuthRegistered(success=True, id=5656, login='hfgffd@ukr.net')
+
+# @router.post('/register', response_model=AuthRegistered, status_code=status.HTTP_201_CREATED)
+# async def register_api(request: Request, response: Response, auth_details: AuthDetails):
+#     print(request.cookies,          88888888888888888)
+#     print(request.__dict__,          88888888888888888)
 
     # is_login_already_used = await dao.get_user_by_login(auth_details.login)
     # if is_login_already_used:
