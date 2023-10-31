@@ -20,7 +20,7 @@ async def register_api(auth_details: AuthDetails):
         password=auth_details.password,
         notes=auth_details.notes,
     )
-    return AuthRegistered(success=True, id=user_data[0], login='hfgffd@ukr.net')
+    return AuthRegistered(success=True, id=user_data[0], login=user_data[1])
 
 # @router.post('/register', response_model=AuthRegistered, status_code=status.HTTP_201_CREATED)
 # async def register_api(request: Request, response: Response, auth_details: AuthDetails):
