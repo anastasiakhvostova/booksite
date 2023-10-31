@@ -1,56 +1,69 @@
-from fastapi import APIRouter, status, HTTPException, Request, Response, Depends
-
-# from .auth_lib import AuthHandler, AuthLibrary
-# from .schemas import AuthDetails, AuthRegistered, AuthLogin
+# import jwt
+#
+# from fastapi import HTTPException, Security, status, Request
+# from passlib.context import CryptContext
+# from datetime import datetime, timedelta
+#
+# from pydantic import EmailStr
+#
+# import settings
 # import dao
-# from app.auth import dependencies
-
-
-router = APIRouter(
-    prefix='/auth',
-    tags=['auth'],
-)
-
-
-@router.post('/register')
-async def register():
-    return
 #
-# @router.post('/register', response_model=AuthRegistered, status_code=status.HTTP_201_CREATED)
-# async def register_api(request: Request, response: Response, auth_details: AuthDetails):
-#     # print(request.cookies,          88888888888888888)
-#     # print(request.__dict__,          88888888888888888)
 #
-#     is_login_already_used = await dao.get_user_by_login(auth_details.login)
-#     if is_login_already_used:
-#         raise HTTPException(
-#             status_code=status.HTTP_406_NOT_ACCEPTABLE,
-#             detail=f'User with email {auth_details.login} already exists'
+# class AuthHandler:
+#     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+#     secret = settings.Settings.TOKEN_SECRET
+#     algorithm = settings.Settings.TOKEN_ALGORITHM
+#
+#     @classmethod
+#     async def get_password_hash(cls, password: str) -> str:
+#         return cls.pwd_context.hash(password)
+#
+#     @classmethod
+#     async def verify_password(cls, plain_password: str, hashed_password: str) -> bool:
+#         return cls.pwd_context.verify(plain_password, hashed_password)
+#
+#     @classmethod
+#     async def encode_token(cls, user_id: int) -> str:
+#         payload = {
+#             'exp': datetime.utcnow() + timedelta(days=0, minutes=5),
+#             'iat': datetime.utcnow(),
+#             'user_id': user_id
+#         }
+#         return jwt.encode(
+#             payload,
+#             cls.secret,
+#             algorithm=cls.algorithm,
 #         )
 #
-#     hashed_password = await AuthHandler.get_password_hash(auth_details.password)
+#     @classmethod
+#     async def decode_token(cls, token: str) -> dict:
+#         try:
+#             payload = jwt.decode(token, cls.secret, algorithms=[cls.algorithm])
+#             return payload
+#         except jwt.ExpiredSignatureError:
+#             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Signature has expired')
+#         except jwt.InvalidTokenError:
+#             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid token')
 #
-#     user_data = await dao.create_user(
-#         name=auth_details.name,
-#         login=auth_details.login,
-#         password=hashed_password,
-#         notes=auth_details.notes,
-#     )
+#     @classmethod
+#     async def decode_token_web(cls, token: str | None) -> dict:
+#         try:
+#             payload = jwt.decode(token, cls.secret, algorithms=[cls.algorithm])
+#             return payload
+#         except jwt.ExpiredSignatureError:
+#             return {}
+#         except jwt.InvalidTokenError:
+#             return {}
 #
-#     token = await AuthHandler.encode_token(user_data[0])
-#     response.set_cookie(key='my_name', value='Vasyl', max_age=10, httponly=True)
-#     response.set_cookie(key='token', value=token, httponly=True)
+# class AuthLibrary:
 #
-#     return AuthRegistered(success=True, id=user_data[0], login=user_data[1])
-#
-# @router.post('/login')
-# async def login_api(response: Response, user_data: AuthLogin):
-#     user = await AuthLibrary.authenticate_user(user_data.login, user_data.password)
-#     token = await AuthHandler.encode_token(user.id)
-#     response.set_cookie(key='token', value=token, httponly=True)
-#     return {'user': user.login, "logged_in": True}
-#
-# @router.post('/logout')
-# async def logout_api(response: Response, user=Depends(dependencies.get_current_user_required)):
-#     response.delete_cookie('token')
-#     return {'user': 'yep', "logged_out": True}
+#     @classmethod
+#     async def authenticate_user(cls, login: EmailStr, password: str):
+#         user = await dao.get_user_by_login(login)
+#         if not (user and await AuthHandler.verify_password(password, user.password)):
+#             raise HTTPException(
+#                 status_code=status.HTTP_406_NOT_ACCEPTABLE,
+#                 detail=f'Incorrect login "{login}" or password'
+#             )
+#         return user
