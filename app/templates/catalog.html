@@ -22,7 +22,9 @@
             <p class="h2">{{ dish.title }}</p>
             <img src="{{ url_for('static', path='image/' + dish.image) }}" alt="" width="200" height="300">
             <p class="h4">{{ dish.price }}</p>
-            <button type="button" class="btn btn-outline-dark">Додати до побажань</button>
+            <li class="nav-item">
+                    <a class="nav-link" href="/web/add-like">Додати до списку побажань</a>
+            </li>
             <hr>
 
         {% endfor %}

@@ -3,13 +3,14 @@ from fastapi import APIRouter, status, HTTPException, Request, Response, Depends
 from .auth_lib import AuthHandler, AuthLibrary
 from .schemas import AuthDetails, AuthRegistered, AuthLogin
 import dao
-# from app.auth import dependencies
+from app.auth import dependencies
 
 
 router = APIRouter(
     prefix='/auth',
     tags=['auth'],
 )
+
 
 @router.post('/register', response_model=AuthRegistered, status_code=status.HTTP_201_CREATED)
 async def register_api(request: Request, response: Response, auth_details: AuthDetails):
@@ -47,7 +48,7 @@ async def login_api(response: Response, user_data: AuthLogin):
     return {'user': user.login, "logged_in": True}
 
 
-# @router.post('/logout')
-# async def logout_api(response: Response, user=Depends(dependencies.get_current_user_required)):
-#     response.delete_cookie('token')
-#     return {'user': 'yep', "logged_out": True}
+@router.post('/logout')
+async def logout_api(response: Response, user=Depends(dependencies.get_current_user_required)):
+    response.delete_cookie('token')
+    return {'user': 'yep', "logged_out": True}
