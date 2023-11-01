@@ -47,8 +47,10 @@ async def get_menu(request: Request, dish_name: str = Form(None)):
         'request': request,
         'title': f'Результати пошуку за {dish_name}' if dish_name else 'Наше меню',
         'menu': filtered_menu if dish_name else catalog_data.menu,
+        'username': 'ghshvghus',
+        'is_admin': True
         # 'user': user,
-        'categories': catalog_data.Categories
+        # 'categories': catalog_data.Categories
     }
 
     return templates.TemplateResponse(

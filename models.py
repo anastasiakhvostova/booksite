@@ -4,7 +4,7 @@ from sqlalchemy import (
     Column, Integer, Float, String, DateTime, Boolean,
     ForeignKey,
 )
-from sqlalchemy.orm import Mapper, mapped_column
+# from sqlalchemy.orm import Mapper, mapped_column
 from sqlalchemy.dialects.postgresql import JSONB
 
 from database import Base

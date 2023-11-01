@@ -3,7 +3,7 @@ import asyncio
 from sqlalchemy import insert, select, update, delete
 
 from database import async_session_maker
-from models import User, Order
+from models import User
 
 
 async def create_user(
