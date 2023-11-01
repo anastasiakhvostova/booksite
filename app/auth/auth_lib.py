@@ -57,14 +57,14 @@ class AuthHandler:
             return {}
 
 
-# class AuthLibrary:
-#
-#     @classmethod
-#     async def authenticate_user(cls, login: EmailStr, password: str):
-#         user = await dao.get_user_by_login(login)
-#         if not (user and await AuthHandler.verify_password(password, user.password)):
-#             raise HTTPException(
-#                 status_code=status.HTTP_406_NOT_ACCEPTABLE,
-#                 detail=f'Incorrect login "{login}" or password'
-#             )
-#         return user
+class AuthLibrary:
+
+    @classmethod
+    async def authenticate_user(cls, login: EmailStr, password: str):
+        user = await dao.get_user_by_login(login)
+        if not (user and await AuthHandler.verify_password(password, user.password)):
+            raise HTTPException(
+                status_code=status.HTTP_406_NOT_ACCEPTABLE,
+                detail=f'Incorrect login "{login}" or password'
+            )
+        return user
