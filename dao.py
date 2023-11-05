@@ -5,6 +5,9 @@ from sqlalchemy import insert, select, update, delete
 from database import async_session_maker
 from models import User
 
+from tortoise.models import Model
+from tortoise import fields
+
 
 async def create_user(
         name: str,
@@ -67,3 +70,16 @@ async def delete_user(user_id: int):
         print(query)
         await session.execute(query)
         await session.commit()
+
+
+class Book(Model):
+    id = fields.IntField(pk=True)
+    title = fields.CharField(255)
+    author = fields.CharField(255)
+    # Додайте інші поля, які вам потрібні
+
+
+class Wishlist(Model):
+    id = fields.IntField(pk=True)
+    user = fields.ForeignKeyField('models.User', related_name='wishlist')
+    book = fields.ForeignKeyField('models.Book', related_name='wishlist')

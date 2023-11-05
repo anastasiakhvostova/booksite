@@ -47,3 +47,5 @@ async def get_current_user_optional(token=Depends(get_token_web)):
     if not user:
         return None
     return user
+
+

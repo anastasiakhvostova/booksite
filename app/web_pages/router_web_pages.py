@@ -6,10 +6,11 @@ from app import catalog_data
 from app.auth.auth_lib import AuthHandler, AuthLibrary
 from app.auth import dependencies
 
-
 import dao
 
 import settings
+from http import HTTPStatus
+from fastapi.responses import RedirectResponse
 
 
 router = APIRouter(
@@ -70,20 +71,6 @@ async def about_like(request: Request,  user=Depends(dependencies.get_current_us
 
     return templates.TemplateResponse(
         'like.html',
-        context=context,
-    )
-
-
-@router.get('/add-like')
-async def about_like(request: Request,  user=Depends(dependencies.get_current_user_optional)):
-    context = {
-        'request': request,
-        'title': 'Список побажань',
-        'user': user,
-    }
-
-    return templates.TemplateResponse(
-        'add_to_like.html',
         context=context,
     )
 
@@ -253,5 +240,36 @@ async def by_category(category_name: str, request: Request, user=Depends(depende
     }
     return templates.TemplateResponse(
         'catalog.html',
+        context=context,
+    )
+
+
+@router.get('/add-like')
+async def about_like(request: Request,  user=Depends(dependencies.get_current_user_optional)):
+    context = {
+        'request': request,
+        'title': 'Список побажань',
+        'user': user,
+    }
+
+    return templates.TemplateResponse(
+        'add_to_like.html',
+        context=context,
+    )
+
+
+@router.get('/message')
+@router.post('/message')
+async def message(request: Request, message:str=Form(None), user=Depends(dependencies.get_current_user_optional)):
+    print(message, 1111)
+    context = {
+        'request': request,
+        'title': 'Написати відгук',
+        'user': user,
+        'data': ['1', '2', '3', '4', message]
+    }
+
+    return templates.TemplateResponse(
+        'message_to_all.html',
         context=context,
     )
