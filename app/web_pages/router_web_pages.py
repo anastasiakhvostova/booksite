@@ -260,13 +260,18 @@ async def about_like(request: Request,  user=Depends(dependencies.get_current_us
 
 @router.get('/message')
 @router.post('/message')
-async def message(request: Request, message:str=Form(None), user=Depends(dependencies.get_current_user_optional)):
-    print(message, 1111)
+async def message(request: Request, message:str=Form(None),  user=Depends(dependencies.get_current_user_optional)):
+    if message:
+        new_message = await dao.create_comment(
+            comment=message,
+        )
+    # comments = await dao.get_comment_by_login(comment=message)
+    comments = await dao.fetch_comment()
     context = {
         'request': request,
         'title': 'Написати відгук',
         'user': user,
-        'data': ['1', '2', '3', '4', message]
+        'data': comments
     }
 
     return templates.TemplateResponse(

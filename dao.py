@@ -3,10 +3,7 @@ import asyncio
 from sqlalchemy import insert, select, update, delete
 
 from database import async_session_maker
-from models import User
-
-from tortoise.models import Model
-from tortoise import fields
+from models import User, Comment
 
 
 async def create_user(
@@ -30,12 +27,31 @@ async def create_user(
         return tuple(data)[0]
 
 
+async def create_comment(
+        comment: str
+):
+    async with async_session_maker() as session:
+        query = insert(Comment).values(
+            comment=comment,
+        ).returning(Comment.id, Comment.comment)
+        data = await session.execute(query)
+        await session.commit()
+        return tuple(data)[0]
+
+
 async def fetch_users(skip: int = 0, limit: int = 10):
     async with async_session_maker() as session:
         query = select(User).offset(skip).limit(limit)
         result = await session.execute(query)
         # print(type(result.scalars().all()[0]))
         # print(result.scalars().all()[0].__dict__)
+        return result.scalars().all()
+
+
+async def fetch_comment(skip: int = 0, limit: int = 5):
+    async with async_session_maker() as session:
+        query = select(Comment).order_by(Comment.id.desc()).offset(skip).limit(limit)
+        result = await session.execute(query)
         return result.scalars().all()
 
 
@@ -72,14 +88,4 @@ async def delete_user(user_id: int):
         await session.commit()
 
 
-class Book(Model):
-    id = fields.IntField(pk=True)
-    title = fields.CharField(255)
-    author = fields.CharField(255)
-    # Додайте інші поля, які вам потрібні
 
-
-class Wishlist(Model):
-    id = fields.IntField(pk=True)
-    user = fields.ForeignKeyField('models.User', related_name='wishlist')
-    book = fields.ForeignKeyField('models.Book', related_name='wishlist')

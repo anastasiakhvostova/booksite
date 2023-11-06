@@ -53,3 +53,4 @@ class Order(BaseInfoMixin, Base):
 class Comment(BaseInfoMixin, Base):
     __tablename__ = 'comment'
     comment = Column(String(1000))
+
